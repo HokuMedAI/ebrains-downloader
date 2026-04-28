@@ -2,14 +2,15 @@ import argparse
 import csv
 import sys
 from pathlib import Path
+from urllib.parse import quote
 
 import requests
 from fairgraph import KGClient
 from tqdm import tqdm
 
-DATASET_ID = "### DATASET_ID ###"
-VERSION = "### VERSION ###"
-BASE_URL = f"### URL TO DATASET ###/{DATASET_ID}/{VERSION}"
+DATASET_ID = "8fc108ab-e2b4-406f-8999-60269dc1f994"
+VERSION = "v1.0"
+BASE_URL = f"https://data-proxy.ebrains.eu/api/v1/datasets/{DATASET_ID}/{VERSION}"
 
 MAX_RETRIES = 5
 TIMEOUT = (30, 60)  # (connect, read) seconds
@@ -42,7 +43,7 @@ def load_targets(annotation_path: Path, diagnoses: list[str]) -> list[tuple[str,
 
 
 def download_file(token: str, diagnosis: str, uuid: str, output_dir: Path, index: int, total: int) -> None:
-    url = f"{BASE_URL}/{diagnosis}/{uuid}.ndpi"
+    url = f"{BASE_URL}/{quote(diagnosis)}/{uuid}.ndpi"
     dest = output_dir / diagnosis / f"{uuid}.ndpi"
     dest.parent.mkdir(parents=True, exist_ok=True)
     desc = f"[{index}/{total}] {uuid}"
@@ -83,13 +84,12 @@ def download_file(token: str, diagnosis: str, uuid: str, output_dir: Path, index
 def main():
     parser = argparse.ArgumentParser(description="Download EBRAINS dataset files filtered by diagnosis")
     parser.add_argument("--diagnosis", nargs="+", required=True, metavar="DIAGNOSIS", help="Diagnosis name(s) to download")
-    parser.add_argument("--annotation", default="annotation.csv", help="Path to annotation CSV (default: annotation.csv)")
     parser.add_argument("--refresh-annotation", action="store_true", help="Re-download annotation.csv even if it exists")
     parser.add_argument("--output", default="downloads", help="Output directory (default: downloads)")
     args = parser.parse_args()
 
-    annotation_path = Path(args.annotation)
     output_dir = Path(args.output)
+    annotation_path = output_dir / "annotation.csv"
 
     token = get_token()
 
