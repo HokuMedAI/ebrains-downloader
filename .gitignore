@@ -1,0 +1,16 @@
+# Ignore all
+/*
+
+### Force-include these files (exceptions to "ignore all") ###
+
+# Track essential project files 
+!.gitignore
+!.python-version
+!README.md
+!pyproject.toml
+!uv.lock
+
+# Ignore __pycache__
+__pycache__/
+*.pyc
+*.pyo
