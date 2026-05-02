@@ -34,7 +34,10 @@ pip install -e .
 ## Basic use
 
 ```bash
-uvx --from git+https://github.com/HokuMedAI/ebrains-downloader ebrains-downloader --diagnosis <DIAGNOSIS> [OPTIONS]
+# set alias for brevity
+alias ebrains="uvx --from git+https://github.com/HokuMedAI/ebrains-downloader ebrains-downloader"
+
+ebrains --diagnosis <DIAGNOSIS> [OPTIONS]
 ```
 
 ### Auguments
@@ -47,25 +50,25 @@ uvx --from git+https://github.com/HokuMedAI/ebrains-downloader ebrains-downloade
 Download all files for a single diagnosis:
 
 ```bash
-uvx --from git+https://github.com/HokuMedAI/ebrains-downloader ebrains-downloader --diagnosis Meningioma
+ebrains --diagnosis Meningioma
 ```
 
 Download files for multiple diagnoses:
 
 ```bash
-uvx --from git+https://github.com/HokuMedAI/ebrains-downloader ebrains-downloader --diagnosis Meningioma Schwannoma
+ebrains --diagnosis Meningioma Schwannoma
 ```
 
 Diagnosis names containing spaces must be quoted:
 
 ```bash
-uvx --from git+https://github.com/HokuMedAI/ebrains-downloader ebrains-downloader --diagnosis "Fibrous meningioma"
+ebrains --diagnosis "Fibrous meningioma"
 ```
 
 Specify a custom output directory:
 
 ```bash
-uvx --from git+https://github.com/HokuMedAI/ebrains-downloader ebrains-downloader --diagnosis Meningioma --output /data/ebrains
+ebrains --diagnosis Meningioma --output /data/ebrains
 ```
 
 <details>
