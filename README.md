@@ -68,6 +68,18 @@ Specify a custom output directory:
 uvx --from git+https://github.com/HokuMedAI/ebrains-downloader ebrains-downloader --diagnosis Meningioma --output /data/ebrains
 ```
 
+<details>
+<summary>Local use</summary>
+
+```bash
+# uv
+uv run ebrains-downloader --diagnosis <DIAGNOSIS> [OPTIONS]
+
+# venv
+ebrains-downloader --diagnosis <DIAGNOSIS> [OPTIONS]
+```
+
+</details>
 
 ### Authentication
 
