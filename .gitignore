@@ -3,7 +3,9 @@
 
 ### Force-include these files (exceptions to "ignore all") ###
 
-# Track essential project files 
+# Track essential project files
+!ebrains_downloader/
+!ebrains_downloader/**
 !.gitignore
 !.python-version
 !README.md
