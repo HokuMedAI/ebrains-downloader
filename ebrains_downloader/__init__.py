@@ -81,7 +81,7 @@ def download_file(token: str, diagnosis: str, uuid: str, output_dir: Path, index
             tqdm.write(f"\n  retry {attempt}/{MAX_RETRIES}: {e}", file=sys.stderr)
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description="Download EBRAINS dataset files filtered by diagnosis")
     parser.add_argument("--diagnosis", nargs="+", required=True, metavar="DIAGNOSIS", help="Diagnosis name(s) to download")
     parser.add_argument("--refresh-annotation", action="store_true", help="Re-download annotation.csv even if it exists")
@@ -116,7 +116,3 @@ def main():
     print(f"\nDone. {len(targets) - len(failed)} succeeded, {len(failed)} failed.")
     if failed:
         sys.exit(1)
-
-
-if __name__ == "__main__":
-    main()
