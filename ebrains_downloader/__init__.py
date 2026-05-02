@@ -84,7 +84,6 @@ def download_file(token: str, diagnosis: str, uuid: str, output_dir: Path, index
 def main() -> None:
     parser = argparse.ArgumentParser(description="Download EBRAINS dataset files filtered by diagnosis")
     parser.add_argument("--diagnosis", nargs="+", required=True, metavar="DIAGNOSIS", help="Diagnosis name(s) to download")
-    parser.add_argument("--refresh-annotation", action="store_true", help="Re-download annotation.csv even if it exists")
     parser.add_argument("--output", default="downloads", help="Output directory (default: downloads)")
     args = parser.parse_args()
 
@@ -93,7 +92,7 @@ def main() -> None:
 
     token = get_token()
 
-    if not annotation_path.exists() or args.refresh_annotation:
+    if not annotation_path.exists():
         print("Downloading annotation.csv...")
         download_annotation(token, annotation_path)
 

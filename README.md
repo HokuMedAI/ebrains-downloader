@@ -1,91 +1,81 @@
-# EBRAINS Downloader
+# ebrains-downloader
 
-A command-line tool to download whole-slide images from an EBRAINS dataset, filtered by diagnosis.
+## A CLI tool for downloading whole-slide images from EBRAINS
 
-## Requirements
+A command-line tool to download `.ndpi` files from an EBRAINS dataset, filtered by diagnosis name.
 
-- Python 3.10+
-- [fairgraph](https://github.com/HumanBrainProject/fairgraph)
-- requests
-- tqdm
+[article link](https://hokumedai.github.io/articles/tech-stack/ebrains-downloader/)
 
-Install dependencies:
+## Installation
+
+No installation required. Run directly from GitHub with [uvx](https://docs.astral.sh/uv/):
 
 ```bash
+uvx --from git+https://github.com/HokuMedAI/ebrains-downloader ebrains-downloader --diagnosis <DIAGNOSIS>
+```
+
+<details>
+<summary>Local install</summary>
+
+```bash
+git clone https://github.com/HokuMedAI/ebrains-downloader
+cd ebrains-downloader
+
 # uv
 uv sync
 
-# pip
-pip install fairgraph requests tqdm
+# venv
+python -m venv .venv && source .venv/bin/activate
+pip install -e .
 ```
 
-## Configuration
+</details>
 
-Before using the tool, set the following constants in `run.py` to match your target dataset:
-
-```python
-DATASET_ID = "..."   # EBRAINS dataset ID
-VERSION    = "..."   # Dataset version
-BASE_URL   = "..."   # Base URL to the dataset
-```
-
-## Authentication
-
-Authentication is handled automatically via `fairgraph`. You will be prompted to log in to your EBRAINS account on first use.
-
-## Usage
+## Basic use
 
 ```bash
-# uv
-uv run run.py --diagnosis <DIAGNOSIS> [OPTIONS]
-
-# pip
-python run.py --diagnosis <DIAGNOSIS> [OPTIONS]
+uvx --from git+https://github.com/HokuMedAI/ebrains-downloader ebrains-downloader --diagnosis <DIAGNOSIS> [OPTIONS]
 ```
 
-### Arguments
+### Auguments
 
 | Argument | Description | Default |
 |---|---|---|
 | `--diagnosis` | One or more diagnosis names to download (required) | — |
 | `--output` | Output directory | `downloads` |
-| `--refresh-annotation` | Re-download `annotation.csv` even if it already exists | off |
-
-### Examples
 
 Download all files for a single diagnosis:
 
 ```bash
-uv run run.py --diagnosis Meningioma
+uvx --from git+https://github.com/HokuMedAI/ebrains-downloader ebrains-downloader --diagnosis Meningioma
 ```
 
 Download files for multiple diagnoses:
 
 ```bash
-uv run run.py --diagnosis Meningioma Schwannoma
+uvx --from git+https://github.com/HokuMedAI/ebrains-downloader ebrains-downloader --diagnosis Meningioma Schwannoma
 ```
 
 Diagnosis names containing spaces must be quoted:
 
 ```bash
-uv run run.py --diagnosis "Fibrous meningioma"
+uvx --from git+https://github.com/HokuMedAI/ebrains-downloader ebrains-downloader --diagnosis "Fibrous meningioma"
 ```
 
 Specify a custom output directory:
 
 ```bash
-uv run run.py --diagnosis Meningioma --output /data/ebrains
+uvx --from git+https://github.com/HokuMedAI/ebrains-downloader ebrains-downloader --diagnosis Meningioma --output /data/ebrains
 ```
 
-Force re-download of the annotation file:
 
-```bash
-uv run run.py --diagnosis Meningioma --refresh-annotation
-```
+### Authentication
 
-## Output Structure
+Authentication is handled automatically via `fairgraph`. You will be prompted to log in to your EBRAINS account on first use.
 
-Downloaded files are saved under the output directory, organized by diagnosis:
+### Output structure
+
+Downloaded files and the annotation CSV are saved under the output directory:
 
 ```
 downloads/
@@ -98,6 +88,10 @@ downloads/
     └── ...
 ```
 
-## Resume Support
+### Auto-resume
 
-Interrupted downloads are automatically resumed from where they left off. Re-running the same command will skip already-completed files.
+Interrupted downloads are automatically resumed from where they left off.
+
+## Issues
+
+Please report bugs and feature requests at [GitHub Issues](https://github.com/HokuMedAI/ebrains-downloader/issues). 
